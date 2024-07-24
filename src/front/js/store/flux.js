@@ -21,6 +21,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
+			register: async (formData) => {
+				try{
+					// fetching data from the backend
+					const resp = await fetch(process.env.BACKEND_URL + "/api/signup", {
+						headers: {
+							'Content-Type' : 'application-json'
+						},
+						method: 'POST',
+						body: JSON.stringify(formData)
+					})
+					const data = await resp.json()
+					setStore({ user: data.user, token: data.token })
+					localStorage.setItem('token', data.token)
+					// don't forget to return something, that is how the async resolves
+					return data;
+				}catch(error){
+					console.log("Error loading message from backend", error)
+				}
+			},
+
 			getMessage: async () => {
 				try{
 					// fetching data from the backend
