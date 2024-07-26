@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
+import "../../styles/registerlogin.css";
 
 export const RegisterLogin = () => {
     const { store, actions } = useContext(Context);
@@ -28,12 +29,12 @@ export const RegisterLogin = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="form-container" >
             <input type="text" name="email" onChange={handleChange} placeholder="E-Mail" value={formData.email} />
             <input type="password" name="password" onChange={handleChange} placeholder="Contraseña" value={formData.password} />
-            <input type="submit" value={login ? 'Inicia Sesión' : 'Regístrate'} />
+            <input type="submit" value={login ? 'Inicia Sesión' : 'Regístrate'} className="btn btn-light" />
             <p>
-                ¿Ya tienes una cuenta? <span onClick={() => setLogin(!login)}>Inicia Sesión</span>
+                ¿Ya tienes una cuenta? <span onClick={() => setLogin(!login)} className="hoverable-span">Inicia Sesión</span>
             </p>
         </form>
     );

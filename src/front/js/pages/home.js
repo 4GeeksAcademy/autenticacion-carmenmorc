@@ -15,7 +15,7 @@ export const Home = () => {
 	};
 
 	// Check if there is a token in the store or localStorage
-	const isLoggedIn = store.token || localStorage.getItem('token');
+	const isLoggedIn = store.token && localStorage.getItem('token');
 
 	return (
 		<div className="text-center mt-5">
@@ -25,10 +25,10 @@ export const Home = () => {
 					<p>Se inició sesión</p>
 					<Link to={'/demo'}>Navega</Link>
 					
-					<button onClick={handleLogout}>Cierra Sesión</button>
+					<button onClick={handleLogout} className="btn btn-light">Cierra Sesión</button>
 				</>
 			) : (
-				<p>No estás logueado</p>
+				<p>No estás loggeado</p>
 			)}
 		</div>
 	);

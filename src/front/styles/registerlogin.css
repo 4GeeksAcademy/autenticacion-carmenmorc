@@ -1,0 +1,32 @@
+body{
+    margin-top: 10%;
+}
+
+.form-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    width: 25%;
+    margin: auto;
+}
+
+input {
+    border-radius: 10px;
+    border-width: 0px;
+    padding: 6px;
+}
+
+.btn{
+    border-radius: 10px;
+}
+
+.hoverable-span {
+    cursor: pointer; 
+    text-decoration: none; 
+}
+
+.hoverable-span:hover {
+    text-decoration: underline; 
+    cursor: pointer;
+}
+
