@@ -7,29 +7,29 @@ import { Link, useNavigate } from "react-router-dom";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
-	const navigate = useNavigate()
-
+	const navigate = useNavigate();
+	
 	const handleLogout = () => {
-		actions.logout()
-		navigate('/')
-	}
+		actions.logout();
+		navigate('/');
+	};
+
+	// Check if there is a token in the store or localStorage
+	const isLoggedIn = store.token || localStorage.getItem('token');
 
 	return (
 		<div className="text-center mt-5">
 			<RegisterLogin />
-
-			{store.token || localStorage.getItem('token') ? 
-
-			<>
-				<p>Se inció sesión</p>
-				<Link to={'/demo'}>Ir a demo</Link>
-				o
-				<button onClick={handleLogout}>Log Out</button>
+			{isLoggedIn ? (
+				<>
+					<p>Se inició sesión</p>
+					<Link to={'/demo'}>Navega</Link>
+					
+					<button onClick={handleLogout}>Cierra Sesión</button>
 				</>
-				:
-				''
-			}
-
+			) : (
+				<p>No estás logueado</p>
+			)}
 		</div>
 	);
 };
