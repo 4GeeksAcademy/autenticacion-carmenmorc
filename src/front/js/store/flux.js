@@ -21,12 +21,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
+			checkAuth: async () => {
+				try{
+					const token = getStore().token || localStorage.getItem('token')
+					const resp = await fetch(process.env.BACKEND_URL + "/api/token", {
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization' : `Bearer ${token}`
+						},
+						method: 'GET',
+					})
+					if (resp.status!=200) return false
+					const data = await resp.json()
+					console.log(data)
+					return data;
+				}catch(error){
+					console.log("Error loading message from backend", error)
+				}
+
+			},
+
 			register: async (formData) => {
 				try{
-					// fetching data from the backend
 					const resp = await fetch(process.env.BACKEND_URL + "/api/signup", {
 						headers: {
-							'Content-Type' : 'application-json'
+							'Content-Type' : 'application/json'
 						},
 						method: 'POST',
 						body: JSON.stringify(formData)
@@ -34,11 +53,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await resp.json()
 					setStore({ user: data.user, token: data.token })
 					localStorage.setItem('token', data.token)
-					// don't forget to return something, that is how the async resolves
 					return data;
 				}catch(error){
 					console.log("Error loading message from backend", error)
 				}
+			},
+
+			login: async (formData) => {
+				try{
+					const resp = await fetch(process.env.BACKEND_URL + "/api/login", {
+						headers: {
+							'Content-Type' : 'application/json'
+						},
+						method: 'POST',
+						body: JSON.stringify(formData)
+					})
+					const data = await resp.json()
+					setStore({ user: data.user, token: data.token })
+					localStorage.setItem('token', data.token)
+					return data;
+				}catch(error){
+					console.log("Error loading message from backend", error)
+				}
+			},
+
+			logout: () => {
+				localStorage.removeItem('token')
+				setStore({user : null, token : null})
+				return true
 			},
 
 			getMessage: async () => {

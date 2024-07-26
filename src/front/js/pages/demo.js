@@ -1,10 +1,22 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Context } from "../store/appContext";
 
 export const Demo = () => {
+
 	const { store, actions } = useContext(Context);
+	const navigate = useNavigate()
+
+	const check = async () => {
+		const status = await actions.checkAuth(localStorage.getItem('token'))
+		if (!status.success) navigate()
+	}
+
+	useEffect(()=>{
+		if (!localStorage.getItem('token')) navigate('/')
+		check()
+	},[])
 
 	return (
 		<div className="container">

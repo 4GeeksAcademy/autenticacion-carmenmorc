@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { Context } from "../store/appContext";
 
 export const RegisterLogin = () => {
+
+    const [store, actions] = useContext(Context);
 
     const [formData, setFormData] = useState({
         email: '',
@@ -16,6 +19,8 @@ export const RegisterLogin = () => {
     
     const handleSubmit = e => {
         e.preventDefault();
+        if (login) actions.login(formData)
+        actions.register(formData)
     }
     
     return (
